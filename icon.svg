@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="512"
+   height="512"
+   viewBox="0 0 135.46666 135.46667"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1 (c68e22c387, 2021-05-23)"
+   sodipodi:docname="icon.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#505050"
+     bordercolor="#ffffff"
+     borderopacity="1"
+     inkscape:pageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="1"
+     inkscape:document-units="px"
+     showgrid="false"
+     units="px"
+     inkscape:zoom="0.74118967"
+     inkscape:cx="181.46502"
+     inkscape:cy="346.06526"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="1592"
+     inkscape:window-y="32"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2">
+    <rect
+       x="41.824652"
+       y="49.919746"
+       width="437.13507"
+       height="429.03998"
+       id="rect10864" />
+    <rect
+       x="31.031193"
+       y="32.380376"
+       width="449.27771"
+       height="442.5318"
+       id="rect6722" />
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <text
+       xml:space="preserve"
+       transform="scale(0.26458333)"
+       id="text6720"
+       style="fill:black;fill-opacity:1;line-height:1.25;stroke:none;font-family:sans-serif;font-style:normal;font-weight:normal;font-size:40px;white-space:pre;shape-inside:url(#rect6722)" />
+    <g
+       id="g17698">
+      <text
+         xml:space="preserve"
+         transform="matrix(0.63979326,0,0,0.63979326,-24.52446,-7.8796286)"
+         id="text10862"
+         style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect10864);fill:#ea20db;fill-opacity:1;stroke:none"><tspan
+           x="41.824219"
+           y="86.413135"
+           id="tspan17715">Better</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-weight:normal;font-size:25.5917px;line-height:1.25;font-family:sans-serif;fill:#20eaaa;fill-opacity:1;stroke:none;stroke-width:0.639792"
+         x="26.415565"
+         y="77.633308"
+         id="text13026"><tspan
+           sodipodi:role="line"
+           id="tspan13024"
+           style="stroke-width:0.639792;fill:#20eaaa;fill-opacity:1"
+           x="26.415565"
+           y="77.633308">Party</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-weight:normal;font-size:25.5917px;line-height:1.25;font-family:sans-serif;fill:#eade20;fill-opacity:1;stroke:none;stroke-width:0.639792"
+         x="50.596729"
+         y="106.27887"
+         id="text14944"><tspan
+           sodipodi:role="line"
+           id="tspan14942"
+           style="stroke-width:0.639792;fill:#eade20;fill-opacity:1"
+           x="50.596729"
+           y="106.27887">Finder</tspan></text>
+    </g>
+  </g>
+</svg>

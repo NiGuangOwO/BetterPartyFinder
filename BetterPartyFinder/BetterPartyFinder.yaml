@@ -1,0 +1,15 @@
+﻿author: ascclemens, NiGuangOwO (本地化)
+name: Better Party Finder
+punchline: 使用高级队员招募过滤器预设。
+description: |-
+  更好地过滤队员招募
+
+  提供所有普通的过滤功能，此外：
+
+  - 创建过滤器预设方便切换
+  - 特定任务和类别的白名单/黑名单
+  - 添加想要隐藏招募的关键字
+  - 删除高于最高品级的招募
+  - 按品级范围筛选
+  - 过滤多个职业和插槽（例如机工 + 绝枪可加入）
+repo_url: https://git.annaclemens.io/ascclemens/BetterPartyFinder
