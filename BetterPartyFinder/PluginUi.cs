@@ -872,7 +872,7 @@ namespace BetterPartyFinder
                 if (des.Length != 0)
                 {
                     //var world = worlds[_selectedWorld];
-                    filter.Description.Add(des);
+                    filter.Description.Add(des.ToLower());
                     Plugin.Config.Save();
                 }
             }

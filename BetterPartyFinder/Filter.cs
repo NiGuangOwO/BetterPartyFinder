@@ -125,7 +125,7 @@ namespace BetterPartyFinder {
                 //PluginLog.Debug(listing.Description.ToString());
                 foreach (var des in filter.Description)
                 {
-                    if (listing.Description.ToString().Contains(des))
+                    if (listing.Description.ToString().ToLower().Contains(des))
                     {
                         ifexist = false;
                     }
