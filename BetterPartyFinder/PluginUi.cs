@@ -356,14 +356,14 @@ namespace BetterPartyFinder
 
             DrawItemLevelTab(filter);
 
-            DrawJobsTab(filter);
+            //DrawJobsTab(filter);
             DrawJobsLimitTab(filter);
 
             DrawRestrictionsTab(filter);
 
             DrawPlayersTab(filter);
             DrawDescription(filter);
-
+            DrawDescriptionExclude(filter);
             ImGui.EndTabBar();
         }
 
@@ -892,6 +892,60 @@ namespace BetterPartyFinder
             if (deleting != null)
             {
                 filter.Description.Remove(deleting);
+                Plugin.Config.Save();
+            }
+
+            ImGui.EndTabItem();
+        }
+        private string _descriptionExclude = string.Empty;
+        private void DrawDescriptionExclude(ConfigurationFilter filter)
+        {
+            
+            var player = Plugin.ClientState.LocalPlayer;
+
+            if (player == null || !ImGui.BeginTabItem("留言屏蔽"))
+            {
+                return;
+            }
+
+            ImGui.PushItemWidth(ImGui.GetWindowWidth() / 3f);
+
+            ImGui.InputText("###DescriptionExclude", ref _descriptionExclude, 64);
+
+            ImGui.SameLine();
+
+
+            ImGui.PopItemWidth();
+
+            ImGui.SameLine();
+
+            if (IconButton(FontAwesomeIcon.Plus, "add-description"))
+            {
+                var des = _descriptionExclude.Trim();
+                if (des.Length != 0)
+                {
+                    //var world = worlds[_selectedWorld];
+                    filter.DescriptionExclude.Add(des.ToLower());
+                    Plugin.Config.Save();
+                }
+            }
+
+            string? deleting = null;
+
+            foreach (var info in filter.DescriptionExclude)
+            {
+                //var world = Plugin.DataManager.GetExcelSheet<World>()!.GetRow(info.World);
+                ImGui.TextUnformatted(info);
+                ImGui.SameLine();
+                if (IconButton(FontAwesomeIcon.Trash, $"delete-{info.GetHashCode()}"))
+                {
+                    deleting = info;
+                }
+            }
+
+            if (deleting != null)
+            {
+                filter.DescriptionExclude.Remove(deleting);
                 Plugin.Config.Save();
             }
 
