@@ -1,8 +1,7 @@
-﻿using System;
+using System;
 using Dalamud.Game.Gui.PartyFinder.Types;
 using Dalamud.Game.Text;
 using Dalamud.Game.Text.SeStringHandling;
-using Dalamud.Logging;
 
 namespace BetterPartyFinder
 {
