@@ -155,7 +155,7 @@ namespace BetterPartyFinder
                     return false;
                 }
             }
-            if (filter.DescriptionExclude.Count>0)
+            if (filter.DescriptionExclude.Count > 0)
             {
                 //var ifexist = true;
                 //PluginLog.Debug(listing.Description.ToString());

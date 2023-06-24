@@ -900,7 +900,7 @@ namespace BetterPartyFinder
         private string _descriptionExclude = string.Empty;
         private void DrawDescriptionExclude(ConfigurationFilter filter)
         {
-            
+
             var player = Plugin.ClientState.LocalPlayer;
 
             if (player == null || !ImGui.BeginTabItem("留言屏蔽"))

@@ -6,5 +6,5 @@
 	"InternalName": "BetterPartyFinder",
 	"ApplicableVersion": "any",
 	"IconUrl": "https://raw.githubusercontent.com/NiGuangOwO/BetterPartyFinder/main/icon.png",
-	"Changelog": "- 新增职业限制，用于过滤掉队伍中已存在某些职业的招募\n- 新增招募留言过滤，仅显示包含已添加关键词的招募 (@Fragile)"
+	"Changelog": "- 新增职业限制，用于过滤掉队伍中已存在某些职业的招募\n- 新增招募留言过滤，仅显示包含已添加关键词的招募\n- 新增招募留言屏蔽，添加屏蔽词来屏蔽例如“装甲车”等无用招募 (@Fragile)"
 }
