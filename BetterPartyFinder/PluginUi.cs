@@ -356,7 +356,7 @@ namespace BetterPartyFinder
 
             DrawItemLevelTab(filter);
 
-            DrawJobsTab(filter);
+            //DrawJobsTab(filter);
             DrawJobsLimitTab(filter);
 
             DrawRestrictionsTab(filter);
@@ -846,14 +846,14 @@ namespace BetterPartyFinder
         private string _description = string.Empty;
         private void DrawDescription(ConfigurationFilter filter)
         {
-            
+
             var player = Plugin.ClientState.LocalPlayer;
 
             if (player == null || !ImGui.BeginTabItem("留言"))
             {
                 return;
             }
-
+            ImGui.TextWrapped("仅显示包含已添加关键词的招募");
             ImGui.PushItemWidth(ImGui.GetWindowWidth() / 3f);
 
             ImGui.InputText("###Description", ref _description, 64);

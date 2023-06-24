@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <TargetFramework>net7.0-windows</TargetFramework>
-        <Version>1.2.7</Version>
+        <Version>1.2.8</Version>
         <LangVersion>latest</LangVersion>
         <Nullable>enable</Nullable>
         <ProduceReferenceAssembly>false</ProduceReferenceAssembly>
