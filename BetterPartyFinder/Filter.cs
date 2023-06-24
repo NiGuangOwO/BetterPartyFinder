@@ -155,6 +155,19 @@ namespace BetterPartyFinder
                     return false;
                 }
             }
+            if (filter.DescriptionExclude.Count>0)
+            {
+                //var ifexist = true;
+                //PluginLog.Debug(listing.Description.ToString());
+                foreach (var des in filter.DescriptionExclude)
+                {
+                    if (listing.Description.ToString().ToLower().Contains(des))
+                    {
+                        return false;
+                    }
+                }
+
+            }
             // filter based on jobs (slow?)
             if (filter.Jobs.Count > 0 && !listing[SearchAreaFlags.AllianceRaid])
             {

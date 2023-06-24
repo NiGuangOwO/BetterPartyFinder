@@ -61,6 +61,7 @@ namespace BetterPartyFinder
 
         public HashSet<PlayerInfo> Players { get; set; } = new();
         public HashSet<String> Description { get; set; } = new();
+        public HashSet<String> DescriptionExclude { get; set; } = new();
 
         internal bool this[SearchAreaFlags flags]
         {
