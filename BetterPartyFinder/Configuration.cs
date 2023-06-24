@@ -54,6 +54,7 @@ namespace BetterPartyFinder {
         public uint? MaxItemLevel { get; set; }
 
         public HashSet<PlayerInfo> Players { get; set; } = new();
+        public HashSet<String> Description { get; set; } = new();
 
         internal bool this[SearchAreaFlags flags] {
             get => (SearchArea & flags) > 0;
