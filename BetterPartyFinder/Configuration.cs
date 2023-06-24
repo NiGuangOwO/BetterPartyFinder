@@ -16,6 +16,7 @@ namespace BetterPartyFinder {
         public bool ShowWhenPfOpen { get; set; }
         public WindowSide WindowSide { get; set; } = WindowSide.Left;
         public bool ShowDescriptionOnJoin { get; set; } = true;
+        public bool AlwaysOnePlayerPerJob { get; set; } = true;
 
         internal static Configuration? Load(Plugin plugin) {
             return (Configuration?) plugin.Interface.GetPluginConfig();
@@ -41,7 +42,7 @@ namespace BetterPartyFinder {
         public List<JobFlags> Jobs { get; set; } = new();
         // default to true because that's the PF's default
         // use nosol if trying to avoid spam
-
+        public List<JobFlags> JobsLimit { get; set; } = new();
         public SearchAreaFlags SearchArea { get; set; } = (SearchAreaFlags) ~(uint) 0;
         public LootRuleFlags LootRule { get; set; } = ~LootRuleFlags.None;
         public DutyFinderSettingsFlags DutyFinderSettings { get; set; } = ~DutyFinderSettingsFlags.None;

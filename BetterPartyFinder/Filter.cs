@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Dalamud.Game.Gui.PartyFinder.Types;
+using Dalamud.Logging;
 
 namespace BetterPartyFinder {
     public class Filter : IDisposable {
@@ -19,8 +20,15 @@ namespace BetterPartyFinder {
 
         private void ReceiveListing(PartyFinderListing listing, PartyFinderListingEventArgs args) {
             args.Visible = args.Visible && ListingVisible(listing);
+            //PluginLog.Debug(listing.Name.ToString());
         }
+        internal class UploadableSlot {
+            public JobFlags Accepting { get; }
 
+            internal UploadableSlot(PartyFinderSlot slot) {
+                this.Accepting = slot.Accepting.Aggregate((JobFlags) 0, (agg, flag) => agg | flag);
+            }
+        }
         private bool ListingVisible(PartyFinderListing listing) {
             // get the current preset or mark all pfs as visible
             var selectedId = Plugin.Config.SelectedPreset;
@@ -80,6 +88,33 @@ namespace BetterPartyFinder {
                 return false;
             }
 
+            if (filter.JobsLimit.Count>0)
+            {
+                if (listing.SlotsAvailable<8)
+                {
+                    return false;
+                }
+                List<string> ExistJob = new List<string>();
+                foreach (var classjob in listing.JobsPresent)
+                {
+                    if (classjob.Value!=null)
+                    {
+                        //PluginLog.Debug(classjob.Value.NameEnglish);
+                        ExistJob.Add(classjob.Value.NameEnglish);
+                    }
+                }
+                //PluginLog.Debug(filter.Jobs.FirstOrDefault().ToString()+"=============");
+                //List<string> list = new List<string>(filter.Jobs.FirstOrDefault().ToString().Split(','));
+                string str = filter.JobsLimit.FirstOrDefault().ToString();
+                str = str.Replace(" ", "");
+                List<string> joblist = new List<string>(str.Split(','));
+                /*foreach (string item in list)
+                {
+                    PluginLog.Debug(item+"++++++++++++++++++++");
+                }*/
+                bool hasCommonElements = ExistJob.Intersect(joblist).Any();
+                return !hasCommonElements;
+            }
             // filter based on jobs (slow?)
             if (filter.Jobs.Count > 0 && !listing[SearchAreaFlags.AllianceRaid]) {
                 var slots = listing.Slots.ToArray();
@@ -94,7 +129,7 @@ namespace BetterPartyFinder {
                 for (var idx = 0; idx < filter.Jobs.Count; idx++) {
                     var wanted = filter.Jobs[idx];
 
-                    for (var i = 0; i < listing.SlotsAvailable; i++) {
+                    for (var i = 0; i < listing.Slots.Count; i++) {
                         // if the slot is already full or the job can't fit into it, skip
                         if (present[i] != 0 || !slots[i][wanted]) {
                             continue;
@@ -109,9 +144,11 @@ namespace BetterPartyFinder {
                                 }
 
                                 var job = possibleJob.ClassJob(Plugin.DataManager);
+
                                 if (present.Contains((byte) job.RowId)) {
                                     continue;
                                 }
+                                //PluginLog.Debug(i.ToString());
 
                                 jobs[idx].Add(i);
                                 break;
