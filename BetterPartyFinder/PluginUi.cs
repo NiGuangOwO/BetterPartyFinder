@@ -362,6 +362,7 @@ namespace BetterPartyFinder
             DrawRestrictionsTab(filter);
 
             DrawPlayersTab(filter);
+            DrawDescription(filter);
 
             ImGui.EndTabBar();
         }
@@ -837,6 +838,60 @@ namespace BetterPartyFinder
             if (deleting != null)
             {
                 filter.Players.Remove(deleting);
+                Plugin.Config.Save();
+            }
+
+            ImGui.EndTabItem();
+        }
+        private string _description = string.Empty;
+        private void DrawDescription(ConfigurationFilter filter)
+        {
+            
+            var player = Plugin.ClientState.LocalPlayer;
+
+            if (player == null || !ImGui.BeginTabItem("留言"))
+            {
+                return;
+            }
+
+            ImGui.PushItemWidth(ImGui.GetWindowWidth() / 3f);
+
+            ImGui.InputText("###Description", ref _description, 64);
+
+            ImGui.SameLine();
+
+
+            ImGui.PopItemWidth();
+
+            ImGui.SameLine();
+
+            if (IconButton(FontAwesomeIcon.Plus, "add-description"))
+            {
+                var des = _description.Trim();
+                if (des.Length != 0)
+                {
+                    //var world = worlds[_selectedWorld];
+                    filter.Description.Add(des.ToLower());
+                    Plugin.Config.Save();
+                }
+            }
+
+            string? deleting = null;
+
+            foreach (var info in filter.Description)
+            {
+                //var world = Plugin.DataManager.GetExcelSheet<World>()!.GetRow(info.World);
+                ImGui.TextUnformatted(info);
+                ImGui.SameLine();
+                if (IconButton(FontAwesomeIcon.Trash, $"delete-{info.GetHashCode()}"))
+                {
+                    deleting = info;
+                }
+            }
+
+            if (deleting != null)
+            {
+                filter.Description.Remove(deleting);
                 Plugin.Config.Save();
             }
 

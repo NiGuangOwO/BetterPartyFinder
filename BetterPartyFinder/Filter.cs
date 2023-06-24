@@ -43,13 +43,12 @@ namespace BetterPartyFinder
             {
                 return true;
             }
-
             // check max item level
             if (!filter.AllowHugeItemLevel && Util.MaxItemLevel > 0 && listing.MinimumItemLevel > Util.MaxItemLevel)
             {
                 return false;
             }
-
+            
             // filter based on duty whitelist/blacklist
             if (filter.Duties.Count > 0 && listing.DutyType == DutyType.Normal)
             {
@@ -132,7 +131,29 @@ namespace BetterPartyFinder
                     PluginLog.Debug(item+"++++++++++++++++++++");
                 }*/
                 bool hasCommonElements = ExistJob.Intersect(joblist).Any();
-                return !hasCommonElements;
+                if (hasCommonElements)
+                {
+                    return false;
+                }
+                
+            }
+            //PluginLog.Debug(listing.Description.ToString());
+            if (filter.Description.Count>0)
+            {
+                var ifexist = true;
+                //PluginLog.Debug(listing.Description.ToString());
+                foreach (var des in filter.Description)
+                {
+                    if (listing.Description.ToString().ToLower().Contains(des))
+                    {
+                        ifexist = false;
+                    }
+                }
+
+                if (ifexist)
+                {
+                    return false;
+                }
             }
             // filter based on jobs (slow?)
             if (filter.Jobs.Count > 0 && !listing[SearchAreaFlags.AllianceRaid])
@@ -248,7 +269,8 @@ namespace BetterPartyFinder
                     return false;
                 }
             }
-
+            
+            
             return true;
         }
     }
