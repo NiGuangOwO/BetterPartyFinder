@@ -154,7 +154,6 @@ namespace BetterPartyFinder
 
         private unsafe void DrawFiltersWindow()
         {
-            ImGui.SetNextWindowSizeConstraints(new Vector2(500f, 300f), new Vector2(500f, 9999f));
             AtkUnitBase* addon = null;
             var addonPtr = PartyFinderAddon();
             if (Plugin.Config.ShowWhenPfOpen && addonPtr != IntPtr.Zero)
@@ -168,7 +167,7 @@ namespace BetterPartyFinder
             {
                 return;
             }
-
+            ImGui.SetNextWindowSizeConstraints(new Vector2(550f, 300f), new Vector2(550f, 9999f));
             if (!ImGui.Begin(Plugin.Name, ref _visible, ImGuiWindowFlags.NoDocking))
             {
                 if (ImGui.IsWindowCollapsed() && addon != null && addon->IsVisible)
