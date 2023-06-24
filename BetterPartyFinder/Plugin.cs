@@ -4,6 +4,7 @@ using Dalamud.Game.Command;
 using Dalamud.Game.Gui;
 using Dalamud.Game.Gui.PartyFinder;
 using Dalamud.IoC;
+using Dalamud.Logging;
 using Dalamud.Plugin;
 using XivCommon;
 
@@ -31,7 +32,8 @@ namespace BetterPartyFinder
 
         [PluginService]
         internal GameGui GameGui { get; init; } = null!;
-
+        
+        
         [PluginService]
         internal PartyFinderGui PartyFinderGui { get; init; } = null!;
 
