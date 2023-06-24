@@ -5,12 +5,16 @@ using Dalamud.Data;
 using Dalamud.Game.ClientState.Objects.SubKinds;
 using Lumina.Excel.GeneratedSheets;
 
-namespace BetterPartyFinder {
-    public static class Util {
+namespace BetterPartyFinder
+{
+    public static class Util
+    {
         internal static uint MaxItemLevel { get; private set; }
 
-        internal static void CalculateMaxItemLevel(DataManager data) {
-            if (MaxItemLevel > 0) {
+        internal static void CalculateMaxItemLevel(DataManager data)
+        {
+            if (MaxItemLevel > 0)
+            {
                 return;
             }
 
@@ -24,12 +28,14 @@ namespace BetterPartyFinder {
             MaxItemLevel = max;
         }
 
-        internal static bool ContainsIgnoreCase(this string haystack, string needle) {
+        internal static bool ContainsIgnoreCase(this string haystack, string needle)
+        {
             return CultureInfo.InvariantCulture.CompareInfo.IndexOf(haystack, needle, CompareOptions.IgnoreCase) >= 0;
         }
 
-        internal static IEnumerable<World> WorldsOnDataCentre(DataManager data, PlayerCharacter character) {
-            var dcRow = character.HomeWorld.GameData.DataCenter.Row;
+        internal static IEnumerable<World> WorldsOnDataCentre(DataManager data, PlayerCharacter character)
+        {
+            var dcRow = character.HomeWorld.GameData!.DataCenter.Row;
             return data.GetExcelSheet<World>()!
                 .Where(world => world.IsPublic && world.DataCenter.Row == dcRow);
         }

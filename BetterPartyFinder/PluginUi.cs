@@ -154,8 +154,7 @@ namespace BetterPartyFinder
 
         private unsafe void DrawFiltersWindow()
         {
-            ImGui.SetNextWindowSize(new Vector2(550f, 510f), ImGuiCond.FirstUseEver);
-
+            ImGui.SetNextWindowSizeConstraints(new Vector2(500f, 300f), new Vector2(500f, 9999f));
             AtkUnitBase* addon = null;
             var addonPtr = PartyFinderAddon();
             if (Plugin.Config.ShowWhenPfOpen && addonPtr != IntPtr.Zero)
@@ -180,7 +179,6 @@ namespace BetterPartyFinder
                     {
                         return;
                     }
-
                     ImGui.SetWindowPos(ImGuiHelpers.MainViewport.Pos +
                                        new Vector2(addon->X, addon->Y - ImGui.GetFrameHeight()));
                 }
@@ -609,12 +607,13 @@ namespace BetterPartyFinder
             {
                 return;
             }
-
+            ImGui.TextWrapped("如果某个招募中已经加入了下方勾选的职业之一，则该招募将不会显示。\n举个栗子：勾选诗人、舞者、机工后，最终筛选出的招募是队伍里没有远敏的，无需再点看招募信息查看坑位。");
+            ImGui.Separator();
             if (filter.JobsLimit.Count == 0)
             {
                 filter.JobsLimit.Add(0);
             }
-            
+
             var slot = filter.JobsLimit[0];
 
 

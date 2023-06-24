@@ -12,7 +12,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <DalamudLibPath>F:\wy\addon\Hooks\dev\</DalamudLibPath>
+        <DalamudLibPath>..\..\DalamudDep\</DalamudLibPath>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Linux)))'">

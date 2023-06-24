@@ -4,8 +4,10 @@ using System.Linq;
 using Dalamud.Configuration;
 using Dalamud.Game.Gui.PartyFinder.Types;
 
-namespace BetterPartyFinder {
-    public class Configuration : IPluginConfiguration {
+namespace BetterPartyFinder
+{
+    public class Configuration : IPluginConfiguration
+    {
         private Plugin? Plugin { get; set; }
 
         public int Version { get; set; } = 1;
@@ -18,20 +20,24 @@ namespace BetterPartyFinder {
         public bool ShowDescriptionOnJoin { get; set; } = true;
         public bool AlwaysOnePlayerPerJob { get; set; } = true;
 
-        internal static Configuration? Load(Plugin plugin) {
-            return (Configuration?) plugin.Interface.GetPluginConfig();
+        internal static Configuration? Load(Plugin plugin)
+        {
+            return (Configuration?)plugin.Interface.GetPluginConfig();
         }
 
-        internal void Initialise(Plugin plugin) {
+        internal void Initialise(Plugin plugin)
+        {
             Plugin = plugin;
         }
 
-        internal void Save() {
+        internal void Save()
+        {
             Plugin?.Interface.SavePluginConfig(this);
         }
     }
 
-    public class ConfigurationFilter {
+    public class ConfigurationFilter
+    {
         public string Name { get; set; } = "<未命名预设>";
 
         public ListMode DutiesMode { get; set; } = ListMode.Blacklist;
@@ -43,10 +49,10 @@ namespace BetterPartyFinder {
         // default to true because that's the PF's default
         // use nosol if trying to avoid spam
         public List<JobFlags> JobsLimit { get; set; } = new();
-        public SearchAreaFlags SearchArea { get; set; } = (SearchAreaFlags) ~(uint) 0;
+        public SearchAreaFlags SearchArea { get; set; } = (SearchAreaFlags)~(uint)0;
         public LootRuleFlags LootRule { get; set; } = ~LootRuleFlags.None;
         public DutyFinderSettingsFlags DutyFinderSettings { get; set; } = ~DutyFinderSettingsFlags.None;
-        public ConditionFlags Conditions { get; set; } = (ConditionFlags) ~(uint) 0;
+        public ConditionFlags Conditions { get; set; } = (ConditionFlags)~(uint)0;
         public ObjectiveFlags Objectives { get; set; } = ~ObjectiveFlags.None;
 
         public bool AllowHugeItemLevel { get; set; } = true;
@@ -55,68 +61,95 @@ namespace BetterPartyFinder {
 
         public HashSet<PlayerInfo> Players { get; set; } = new();
 
-        internal bool this[SearchAreaFlags flags] {
+        internal bool this[SearchAreaFlags flags]
+        {
             get => (SearchArea & flags) > 0;
-            set {
-                if (value) {
+            set
+            {
+                if (value)
+                {
                     SearchArea |= flags;
-                } else {
+                }
+                else
+                {
                     SearchArea &= ~flags;
                 }
             }
         }
 
-        internal bool this[LootRuleFlags flags] {
+        internal bool this[LootRuleFlags flags]
+        {
             get => (LootRule & flags) > 0;
-            set {
-                if (value) {
+            set
+            {
+                if (value)
+                {
                     LootRule |= flags;
-                } else {
+                }
+                else
+                {
                     LootRule &= ~flags;
                 }
             }
         }
 
-        internal bool this[DutyFinderSettingsFlags flags] {
+        internal bool this[DutyFinderSettingsFlags flags]
+        {
             get => (DutyFinderSettings & flags) > 0;
-            set {
-                if (value) {
+            set
+            {
+                if (value)
+                {
                     DutyFinderSettings |= flags;
-                } else {
+                }
+                else
+                {
                     DutyFinderSettings &= ~flags;
                 }
             }
         }
 
-        internal bool this[ConditionFlags flags] {
+        internal bool this[ConditionFlags flags]
+        {
             get => (Conditions & flags) > 0;
-            set {
-                if (value) {
+            set
+            {
+                if (value)
+                {
                     Conditions |= flags;
-                } else {
+                }
+                else
+                {
                     Conditions &= ~flags;
                 }
             }
         }
 
-        internal bool this[ObjectiveFlags flags] {
+        internal bool this[ObjectiveFlags flags]
+        {
             get => (Objectives & flags) > 0;
-            set {
-                if (value) {
+            set
+            {
+                if (value)
+                {
                     Objectives |= flags;
-                } else {
+                }
+                else
+                {
                     Objectives &= ~flags;
                 }
             }
         }
 
-        internal ConfigurationFilter Clone() {
+        internal ConfigurationFilter Clone()
+        {
             var categories = Categories.ToHashSet();
             var duties = Duties.ToHashSet();
             var jobs = Jobs.ToList();
             var players = Players.Select(info => info.Clone()).ToHashSet();
 
-            return new ConfigurationFilter {
+            return new ConfigurationFilter
+            {
                 Categories = categories,
                 Conditions = Conditions,
                 Duties = duties,
@@ -134,8 +167,10 @@ namespace BetterPartyFinder {
             };
         }
 
-        internal static ConfigurationFilter Create() {
-            return new() {
+        internal static ConfigurationFilter Create()
+        {
+            return new()
+            {
                 Categories = Enum.GetValues(typeof(UiCategory))
                     .Cast<UiCategory>()
                     .ToHashSet(),
@@ -143,48 +178,59 @@ namespace BetterPartyFinder {
         }
     }
 
-    public class PlayerInfo {
+    public class PlayerInfo
+    {
         public string Name { get; }
         public uint World { get; }
 
-        public PlayerInfo(string name, uint world) {
+        public PlayerInfo(string name, uint world)
+        {
             Name = name;
             World = world;
         }
 
-        internal PlayerInfo Clone() {
+        internal PlayerInfo Clone()
+        {
             return new(Name, World);
         }
 
-        private bool Equals(PlayerInfo other) {
+        private bool Equals(PlayerInfo other)
+        {
             return Name == other.Name && World == other.World;
         }
 
-        public override bool Equals(object? obj) {
-            if (ReferenceEquals(null, obj)) {
+        public override bool Equals(object? obj)
+        {
+            if (obj is null)
+            {
                 return false;
             }
 
-            if (ReferenceEquals(this, obj)) {
+            if (ReferenceEquals(this, obj))
+            {
                 return true;
             }
 
-            return obj.GetType() == GetType() && Equals((PlayerInfo) obj);
+            return obj.GetType() == GetType() && Equals((PlayerInfo)obj);
         }
 
-        public override int GetHashCode() {
-            unchecked {
-                return (Name.GetHashCode() * 397) ^ (int) World;
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return (Name.GetHashCode() * 397) ^ (int)World;
             }
         }
     }
 
-    public enum ListMode {
+    public enum ListMode
+    {
         Whitelist,
         Blacklist,
     }
 
-    public enum WindowSide {
+    public enum WindowSide
+    {
         Left,
         Right,
     }
