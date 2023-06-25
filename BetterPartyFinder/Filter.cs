@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Dalamud.Game.Gui.PartyFinder.Types;
+using Dalamud.Logging;
 
 namespace BetterPartyFinder
 {
@@ -118,7 +119,7 @@ namespace BetterPartyFinder
                     if (classjob.Value != null)
                     {
                         //PluginLog.Debug(classjob.Value.NameEnglish);
-                        ExistJob.Add(classjob.Value.NameEnglish);
+                        ExistJob.Add(classjob.Value.NameEnglish.ToString().Replace(" ", ""));
                     }
                 }
                 //PluginLog.Debug(filter.Jobs.FirstOrDefault().ToString()+"=============");
@@ -126,7 +127,7 @@ namespace BetterPartyFinder
                 string str = filter.JobsLimit.FirstOrDefault().ToString();
                 str = str.Replace(" ", "");
                 List<string> joblist = new(str.Split(','));
-                /*foreach (string item in list)
+                /*foreach (string item in joblist)
                 {
                     PluginLog.Debug(item+"++++++++++++++++++++");
                 }*/
