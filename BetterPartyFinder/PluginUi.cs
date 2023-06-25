@@ -154,7 +154,6 @@ namespace BetterPartyFinder
 
         private unsafe void DrawFiltersWindow()
         {
-            ImGui.SetNextWindowSizeConstraints(new Vector2(500f, 300f), new Vector2(500f, 9999f));
             AtkUnitBase* addon = null;
             var addonPtr = PartyFinderAddon();
             if (Plugin.Config.ShowWhenPfOpen && addonPtr != IntPtr.Zero)
@@ -168,7 +167,7 @@ namespace BetterPartyFinder
             {
                 return;
             }
-
+            ImGui.SetNextWindowSizeConstraints(new Vector2(550f, 300f), new Vector2(550f, 9999f));
             if (!ImGui.Begin(Plugin.Name, ref _visible, ImGuiWindowFlags.NoDocking))
             {
                 if (ImGui.IsWindowCollapsed() && addon != null && addon->IsVisible)
@@ -846,14 +845,14 @@ namespace BetterPartyFinder
         private string _description = string.Empty;
         private void DrawDescription(ConfigurationFilter filter)
         {
-            
+
             var player = Plugin.ClientState.LocalPlayer;
 
             if (player == null || !ImGui.BeginTabItem("留言"))
             {
                 return;
             }
-
+            ImGui.TextWrapped("仅显示包含已添加关键词的招募");
             ImGui.PushItemWidth(ImGui.GetWindowWidth() / 3f);
 
             ImGui.InputText("###Description", ref _description, 64);
@@ -900,7 +899,7 @@ namespace BetterPartyFinder
         private string _descriptionExclude = string.Empty;
         private void DrawDescriptionExclude(ConfigurationFilter filter)
         {
-            
+
             var player = Plugin.ClientState.LocalPlayer;
 
             if (player == null || !ImGui.BeginTabItem("留言屏蔽"))

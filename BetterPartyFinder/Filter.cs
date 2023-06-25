@@ -49,7 +49,7 @@ namespace BetterPartyFinder
             {
                 return false;
             }
-            
+
             // filter based on duty whitelist/blacklist
             if (filter.Duties.Count > 0 && listing.DutyType == DutyType.Normal)
             {
@@ -136,10 +136,10 @@ namespace BetterPartyFinder
                 {
                     return false;
                 }
-                
+
             }
             //PluginLog.Debug(listing.Description.ToString());
-            if (filter.Description.Count>0)
+            if (filter.Description.Count > 0)
             {
                 var ifexist = true;
                 //PluginLog.Debug(listing.Description.ToString());
@@ -156,7 +156,7 @@ namespace BetterPartyFinder
                     return false;
                 }
             }
-            if (filter.DescriptionExclude.Count>0)
+            if (filter.DescriptionExclude.Count > 0)
             {
                 //var ifexist = true;
                 //PluginLog.Debug(listing.Description.ToString());
@@ -283,8 +283,8 @@ namespace BetterPartyFinder
                     return false;
                 }
             }
-            
-            
+
+
             return true;
         }
     }
