@@ -41,7 +41,6 @@ namespace BetterPartyFinder
         internal PluginUi Ui { get; }
         private Commands Commands { get; }
         internal XivCommonBase Common { get; }
-        private JoinHandler JoinHandler { get; }
 
         public Plugin(
             DalamudPluginInterface pluginInterface,
@@ -66,7 +65,6 @@ namespace BetterPartyFinder
 
             Common = new XivCommonBase(Hooks.PartyFinder);
             Filter = new Filter(this);
-            JoinHandler = new JoinHandler(this);
             Ui = new PluginUi(this);
             Commands = new Commands(this);
 
@@ -78,7 +76,6 @@ namespace BetterPartyFinder
         {
             Commands.Dispose();
             Ui.Dispose();
-            JoinHandler.Dispose();
             Filter.Dispose();
             Common.Dispose();
         }

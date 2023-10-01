@@ -133,22 +133,6 @@ namespace BetterPartyFinder
                 Plugin.Config.Save();
             }
 
-            ImGui.Separator();
-
-            var showDesc = Plugin.Config.ShowDescriptionOnJoin;
-            if (ImGui.Checkbox("加入招募后在聊天中显示招募描述", ref showDesc))
-            {
-                Plugin.Config.ShowDescriptionOnJoin = showDesc;
-                Plugin.Config.Save();
-            }
-
-            var alwaysOnePlayerPerJob = Plugin.Config.AlwaysOnePlayerPerJob;
-            if (ImGui.Checkbox("始终打开职能不重复", ref alwaysOnePlayerPerJob))
-            {
-                Plugin.Config.AlwaysOnePlayerPerJob = alwaysOnePlayerPerJob;
-                Plugin.Config.Save();
-            }
-
             ImGui.End();
         }
 
@@ -167,7 +151,7 @@ namespace BetterPartyFinder
             {
                 return;
             }
-            ImGui.SetNextWindowSizeConstraints(new Vector2(550f, 300f), new Vector2(550f, 9999f));
+            ImGui.SetNextWindowSize(new Vector2(550f, 510f), ImGuiCond.FirstUseEver);
             if (!ImGui.Begin(Plugin.Name, ref _visible, ImGuiWindowFlags.NoDocking))
             {
                 if (ImGui.IsWindowCollapsed() && addon != null && addon->IsVisible)
@@ -355,13 +339,13 @@ namespace BetterPartyFinder
 
             DrawItemLevelTab(filter);
 
-            //DrawJobsTab(filter);
             DrawJobsLimitTab(filter);
 
             DrawRestrictionsTab(filter);
 
             DrawPlayersTab(filter);
             DrawDescription(filter);
+            DrawLikeDescription(filter);
             DrawDescriptionExclude(filter);
             ImGui.EndTabBar();
         }
@@ -518,96 +502,13 @@ namespace BetterPartyFinder
             ImGui.EndTabItem();
         }
 
-        private void DrawJobsTab(ConfigurationFilter filter)
-        {
-            if (!ImGui.BeginTabItem("职业"))
-            {
-                return;
-            }
-
-            if (ImGui.Button("添加插槽"))
-            {
-                filter.Jobs.Add(0);
-                Plugin.Config.Save();
-            }
-
-            var toRemove = new HashSet<int>();
-
-            for (var i = 0; i < filter.Jobs.Count; i++)
-            {
-                var slot = filter.Jobs[i];
-
-                if (!ImGui.CollapsingHeader($"插槽 {i + 1}"))
-                {
-                    continue;
-                }
-
-                if (ImGui.Button("全选"))
-                {
-                    filter.Jobs[i] = Enum.GetValues(typeof(JobFlags))
-                        .Cast<JobFlags>()
-                        .Aggregate(slot, (current, job) => current | job);
-                    Plugin.Config.Save();
-                }
-
-                ImGui.SameLine();
-
-                if (ImGui.Button("清除"))
-                {
-                    filter.Jobs[i] = 0;
-                    Plugin.Config.Save();
-                }
-
-                ImGui.SameLine();
-
-                if (ImGui.Button("删除"))
-                {
-                    toRemove.Add(i);
-                }
-
-                foreach (var job in (JobFlags[])Enum.GetValues(typeof(JobFlags)))
-                {
-                    var selected = (slot & job) > 0;
-                    if (!ImGui.Selectable(job.ClassJob(Plugin.DataManager)?.Name ?? "???", ref selected))
-                    {
-                        continue;
-                    }
-
-                    if (selected)
-                    {
-                        slot |= job;
-                    }
-                    else
-                    {
-                        slot &= ~job;
-                    }
-
-                    filter.Jobs[i] = slot;
-
-                    Plugin.Config.Save();
-                }
-            }
-
-            foreach (var idx in toRemove)
-            {
-                filter.Jobs.RemoveAt(idx);
-            }
-
-            if (toRemove.Count > 0)
-            {
-                Plugin.Config.Save();
-            }
-
-            ImGui.EndTabItem();
-        }
-
         private void DrawJobsLimitTab(ConfigurationFilter filter)
         {
             if (!ImGui.BeginTabItem("职业限制"))
             {
                 return;
             }
-            ImGui.TextWrapped("如果某个招募中已经加入了下方勾选的职业之一，则该招募将不会显示。\n举个栗子：勾选诗人、舞者、机工后，最终筛选出的招募是队伍里没有远敏的，无需再点看招募信息查看坑位。");
+            ImGui.TextWrapped("如果某个招募中已经加入了下方勾选的职业之一，则该招募将不会显示。\n举个栗子：勾选诗人、舞者、机工后，最终筛选出的招募是队伍里没有远敏的，无需再点开招募信息查看坑位。");
             ImGui.Separator();
             if (filter.JobsLimit.Count == 0)
             {
@@ -896,6 +797,62 @@ namespace BetterPartyFinder
 
             ImGui.EndTabItem();
         }
+
+        private string _descriptionLike = string.Empty;
+        private void DrawLikeDescription(ConfigurationFilter filter)
+        {
+
+            var player = Plugin.ClientState.LocalPlayer;
+
+            if (player == null || !ImGui.BeginTabItem("留言 (特别关心)"))
+            {
+                return;
+            }
+            ImGui.TextWrapped("关键词特别关心");
+            ImGui.PushItemWidth(ImGui.GetWindowWidth() / 3f);
+
+            ImGui.InputText("###DescriptionLike", ref _descriptionLike, 64);
+
+            ImGui.SameLine();
+
+
+            ImGui.PopItemWidth();
+
+            ImGui.SameLine();
+
+            if (IconButton(FontAwesomeIcon.Plus, "add-description"))
+            {
+                var des = _descriptionLike.Trim();
+                if (des.Length != 0)
+                {
+                    //var world = worlds[_selectedWorld];
+                    filter.DescriptionLike.Add(des.ToLower());
+                    Plugin.Config.Save();
+                }
+            }
+
+            string? deleting = null;
+
+            foreach (var info in filter.DescriptionLike)
+            {
+                //var world = Plugin.DataManager.GetExcelSheet<World>()!.GetRow(info.World);
+                ImGui.TextUnformatted(info);
+                ImGui.SameLine();
+                if (IconButton(FontAwesomeIcon.Trash, $"delete-{info.GetHashCode()}"))
+                {
+                    deleting = info;
+                }
+            }
+
+            if (deleting != null)
+            {
+                filter.DescriptionLike.Remove(deleting);
+                Plugin.Config.Save();
+            }
+
+            ImGui.EndTabItem();
+        }
+
         private string _descriptionExclude = string.Empty;
         private void DrawDescriptionExclude(ConfigurationFilter filter)
         {

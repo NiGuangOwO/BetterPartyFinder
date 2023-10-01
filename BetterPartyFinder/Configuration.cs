@@ -17,8 +17,6 @@ namespace BetterPartyFinder
 
         public bool ShowWhenPfOpen { get; set; }
         public WindowSide WindowSide { get; set; } = WindowSide.Left;
-        public bool ShowDescriptionOnJoin { get; set; } = true;
-        public bool AlwaysOnePlayerPerJob { get; set; } = true;
 
         internal static Configuration? Load(Plugin plugin)
         {
@@ -60,8 +58,9 @@ namespace BetterPartyFinder
         public uint? MaxItemLevel { get; set; }
 
         public HashSet<PlayerInfo> Players { get; set; } = new();
-        public HashSet<String> Description { get; set; } = new();
-        public HashSet<String> DescriptionExclude { get; set; } = new();
+        public HashSet<string> Description { get; set; } = new();
+        public HashSet<string> DescriptionLike { get; set; } = new();
+        public HashSet<string> DescriptionExclude { get; set; } = new();
 
         internal bool this[SearchAreaFlags flags]
         {

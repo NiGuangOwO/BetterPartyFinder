@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Dalamud.Game.Gui.PartyFinder.Types;
-using Dalamud.Logging;
+using Dalamud.Game.Text;
 
 namespace BetterPartyFinder
 {
@@ -25,7 +25,6 @@ namespace BetterPartyFinder
         private void ReceiveListing(PartyFinderListing listing, PartyFinderListingEventArgs args)
         {
             args.Visible = args.Visible && ListingVisible(listing);
-            //PluginLog.Debug(listing.Name.ToString());
         }
         internal class UploadableSlot
         {
@@ -284,6 +283,16 @@ namespace BetterPartyFinder
                 }
             }
 
+            if (filter.DescriptionLike.Count > 0)
+            {
+                foreach (var des in filter.DescriptionLike)
+                {
+                    if (listing.Description.ToString().ToLower().Contains(des))
+                    {
+                        Plugin.Common.Functions.Chat.SendMessage($"/e 有特别关心的招募出现了<se.5>\n招募信息：{listing.Description}");
+                    }
+                }
+            }
 
             return true;
         }
