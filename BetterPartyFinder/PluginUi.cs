@@ -1,11 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
-using Dalamud.Data;
 using Dalamud.Game.Gui.PartyFinder.Types;
 using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Interface;
+using Dalamud.Interface.Utility;
+using Dalamud.Plugin.Services;
 using FFXIVClientStructs.FFXIV.Component.GUI;
 using ImGuiNET;
 using Lumina.Excel.GeneratedSheets;
@@ -930,7 +930,7 @@ namespace BetterPartyFinder
 
     internal static class UiCategoryExt
     {
-        internal static string? Name(this UiCategory category, DataManager data)
+        internal static string? Name(this UiCategory category, IDataManager data)
         {
             var ct = data.GetExcelSheet<ContentType>()!;
             var addon = data.GetExcelSheet<Addon>()!;
@@ -956,7 +956,7 @@ namespace BetterPartyFinder
             };
         }
 
-        internal static bool ListingMatches(this UiCategory category, DataManager data, PartyFinderListing listing)
+        internal static bool ListingMatches(this UiCategory category, IDataManager data, PartyFinderListing listing)
         {
             var cr = data.GetExcelSheet<ContentRoulette>()!;
 

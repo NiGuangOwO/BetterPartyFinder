@@ -1,10 +1,6 @@
-﻿using Dalamud.Data;
-using Dalamud.Game.ClientState;
-using Dalamud.Game.Command;
-using Dalamud.Game.Gui;
-using Dalamud.Game.Gui.PartyFinder;
-using Dalamud.IoC;
+﻿using Dalamud.IoC;
 using Dalamud.Plugin;
+using Dalamud.Plugin.Services;
 using XivCommon;
 
 namespace BetterPartyFinder
@@ -18,23 +14,23 @@ namespace BetterPartyFinder
         internal DalamudPluginInterface Interface { get; init; } = null!;
 
         [PluginService]
-        internal ChatGui ChatGui { get; init; } = null!;
+        internal IChatGui ChatGui { get; init; } = null!;
 
         [PluginService]
-        internal ClientState ClientState { get; init; } = null!;
+        internal IClientState ClientState { get; init; } = null!;
 
         [PluginService]
-        internal CommandManager CommandManager { get; init; } = null!;
+        internal ICommandManager CommandManager { get; init; } = null!;
 
         [PluginService]
-        internal DataManager DataManager { get; init; } = null!;
+        internal IDataManager DataManager { get; init; } = null!;
 
         [PluginService]
-        internal GameGui GameGui { get; init; } = null!;
+        internal IGameGui GameGui { get; init; } = null!;
 
 
         [PluginService]
-        internal PartyFinderGui PartyFinderGui { get; init; } = null!;
+        internal IPartyFinderGui PartyFinderGui { get; init; } = null!;
 
         internal Configuration Config { get; }
         private Filter Filter { get; }
@@ -44,12 +40,12 @@ namespace BetterPartyFinder
 
         public Plugin(
             DalamudPluginInterface pluginInterface,
-            ChatGui chatGui,
-            ClientState clientState,
-            CommandManager commandManager,
-            DataManager dataManager,
-            GameGui gameGui,
-            PartyFinderGui partyFinderGui
+            IChatGui chatGui,
+            IClientState clientState,
+            ICommandManager commandManager,
+            IDataManager dataManager,
+            IGameGui gameGui,
+            IPartyFinderGui partyFinderGui
             )
         {
             Interface = pluginInterface;
@@ -63,7 +59,7 @@ namespace BetterPartyFinder
             Config = Configuration.Load(this) ?? new Configuration();
             Config.Initialise(this);
 
-            Common = new XivCommonBase(Hooks.PartyFinder);
+            Common = new XivCommonBase(Interface, Hooks.PartyFinder);
             Filter = new Filter(this);
             Ui = new PluginUi(this);
             Commands = new Commands(this);
