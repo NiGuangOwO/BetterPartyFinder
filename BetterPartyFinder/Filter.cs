@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Dalamud.Game.Gui.PartyFinder.Types;
-using Dalamud.Game.Text;
 
 namespace BetterPartyFinder
 {
@@ -206,7 +205,7 @@ namespace BetterPartyFinder
 
                                 var job = possibleJob.ClassJob(Plugin.DataManager);
 
-                                if (present.Contains((byte)job.RowId))
+                                if (present.Contains((byte)job!.RowId))
                                 {
                                     continue;
                                 }

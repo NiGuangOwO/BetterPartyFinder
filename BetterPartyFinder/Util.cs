@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using Dalamud.Data;
 using Dalamud.Game.ClientState.Objects.SubKinds;
+using Dalamud.Plugin.Services;
 using Lumina.Excel.GeneratedSheets;
 
 namespace BetterPartyFinder
@@ -11,7 +11,7 @@ namespace BetterPartyFinder
     {
         internal static uint MaxItemLevel { get; private set; }
 
-        internal static void CalculateMaxItemLevel(DataManager data)
+        internal static void CalculateMaxItemLevel(IDataManager data)
         {
             if (MaxItemLevel > 0)
             {
@@ -33,7 +33,7 @@ namespace BetterPartyFinder
             return CultureInfo.InvariantCulture.CompareInfo.IndexOf(haystack, needle, CompareOptions.IgnoreCase) >= 0;
         }
 
-        internal static IEnumerable<World> WorldsOnDataCentre(DataManager data, PlayerCharacter character)
+        internal static IEnumerable<World> WorldsOnDataCentre(IDataManager data, PlayerCharacter character)
         {
             var dcRow = character.HomeWorld.GameData!.DataCenter.Row;
             return data.GetExcelSheet<World>()!
