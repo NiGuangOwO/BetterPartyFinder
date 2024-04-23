@@ -294,7 +294,7 @@ namespace BetterPartyFinder
                         var message = new SeStringBuilder()
                             .AddText($"/e 有特别关心的招募出现了<se.5>\n招募信息：{listing.Description}")
                             .Add(new PartyFinderPayload(listing.Id, PartyFinderPayload.PartyFinderLinkType.NotSpecified))
-                            .AddUiForeground(SeIconChar.LinkMarker.ToIconString(),500)
+                            .AddUiForeground(SeIconChar.LinkMarker.ToIconString(), 500)
                             .AddText($" ({listing.Name.TextValue})")
                             .Add(RawPayload.LinkTerminator);
                         Plugin.Common.Functions.Chat.SendMessageUnsafe(message.Encode());
