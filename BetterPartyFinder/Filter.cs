@@ -1,7 +1,10 @@
-﻿using System;
+﻿using Dalamud.Game.Gui.PartyFinder.Types;
+using Dalamud.Game.Text;
+using Dalamud.Game.Text.SeStringHandling;
+using Dalamud.Game.Text.SeStringHandling.Payloads;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using Dalamud.Game.Gui.PartyFinder.Types;
 
 namespace BetterPartyFinder
 {
@@ -288,7 +291,13 @@ namespace BetterPartyFinder
                 {
                     if (listing.Description.ToString().ToLower().Contains(des))
                     {
-                        Plugin.Common.Functions.Chat.SendMessage($"/e 有特别关心的招募出现了<se.5>\n招募信息：{listing.Description}");
+                        var message = new SeStringBuilder()
+                            .AddText($"/e 有特别关心的招募出现了<se.5>\n招募信息：{listing.Description}")
+                            .Add(new PartyFinderPayload(listing.Id, PartyFinderPayload.PartyFinderLinkType.NotSpecified))
+                            .AddUiForeground(SeIconChar.LinkMarker.ToIconString(),500)
+                            .AddText($" ({listing.Name.TextValue})")
+                            .Add(RawPayload.LinkTerminator);
+                        Plugin.Common.Functions.Chat.SendMessageUnsafe(message.Encode());
                     }
                 }
             }
