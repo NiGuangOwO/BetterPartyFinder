@@ -56,12 +56,14 @@ namespace BetterPartyFinder
 
             Plugin.Interface.UiBuilder.Draw += Draw;
             Plugin.Interface.UiBuilder.OpenConfigUi += OnOpenConfig;
+            Plugin.Interface.UiBuilder.OpenMainUi += OnOpenConfig;
         }
 
         public void Dispose()
         {
             Plugin.Interface.UiBuilder.Draw -= Draw;
             Plugin.Interface.UiBuilder.OpenConfigUi -= OnOpenConfig;
+            Plugin.Interface.UiBuilder.OpenMainUi -= OnOpenConfig;
         }
 
         private void OnOpenConfig()

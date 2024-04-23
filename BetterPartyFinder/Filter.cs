@@ -292,12 +292,14 @@ namespace BetterPartyFinder
                     if (listing.Description.ToString().ToLower().Contains(des))
                     {
                         var message = new SeStringBuilder()
-                            .AddText($"/e 有特别关心的招募出现了<se.5>\n招募信息：{listing.Description}")
+                            .AddText($"有特别关心的招募出现了\n")
                             .Add(new PartyFinderPayload(listing.Id, PartyFinderPayload.PartyFinderLinkType.NotSpecified))
+                            .AddText($"{listing.Name.TextValue}")
                             .AddUiForeground(SeIconChar.LinkMarker.ToIconString(), 500)
-                            .AddText($" ({listing.Name.TextValue})")
+                            .AddText($"{listing.Description.TextValue}")
                             .Add(RawPayload.LinkTerminator);
-                        Plugin.Common.Functions.Chat.SendMessageUnsafe(message.Encode());
+                        FFXIVClientStructs.FFXIV.Client.UI.UIModule.PlayChatSoundEffect(5);
+                        Plugin.ChatGui.Print(message.BuiltString);
                     }
                 }
             }
