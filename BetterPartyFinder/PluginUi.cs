@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Numerics;
-using Dalamud.Game.Gui.PartyFinder.Types;
+﻿using Dalamud.Game.Gui.PartyFinder.Types;
 using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Interface;
 using Dalamud.Interface.Utility;
@@ -9,6 +6,9 @@ using Dalamud.Plugin.Services;
 using FFXIVClientStructs.FFXIV.Component.GUI;
 using ImGuiNET;
 using Lumina.Excel.GeneratedSheets;
+using System;
+using System.Linq;
+using System.Numerics;
 using Addon = Lumina.Excel.GeneratedSheets.Addon;
 
 namespace BetterPartyFinder
@@ -16,7 +16,7 @@ namespace BetterPartyFinder
     public class PluginUi : IDisposable
     {
         private static readonly uint[] AllowedContentTypes =
-        {
+        [
             2,
             3,
             4,
@@ -26,7 +26,9 @@ namespace BetterPartyFinder
             21,
             26,
             28,
-        };
+            29,
+            30
+        ];
 
         private Plugin Plugin { get; }
 
@@ -928,6 +930,7 @@ namespace BetterPartyFinder
         GatheringForays,
         DeepDungeons,
         AdventuringForays,
+        VariantAndCriterionDungeons
     }
 
     internal static class UiCategoryExt
@@ -954,6 +957,7 @@ namespace BetterPartyFinder
                 UiCategory.GatheringForays => addon.GetRow(2_306)?.Text.ToString(),
                 UiCategory.DeepDungeons => ct.GetRow((uint)ContentType2.DeepDungeons)?.Name.ToString(),
                 UiCategory.AdventuringForays => addon.GetRow(2_307)?.Text.ToString(),
+                UiCategory.VariantAndCriterionDungeons => ct.GetRow((uint)ContentType2.VariantAndCriterionDungeons)?.Name.ToString(),
                 _ => null,
             };
         }
@@ -991,6 +995,7 @@ namespace BetterPartyFinder
                 UiCategory.GatheringForays => isNormal && listing.Category == DutyCategory.GatheringForays,
                 UiCategory.DeepDungeons => isOther && listing.Category == DutyCategory.DeepDungeons,
                 UiCategory.AdventuringForays => isNormal && listing.Category == DutyCategory.AdventuringForays,
+                UiCategory.VariantAndCriterionDungeons => isNormal && (int)listing.Category == 128,
                 _ => false,
             };
         }
@@ -1021,6 +1026,7 @@ namespace BetterPartyFinder
             CustomDeliveries = 25,
             Eureka = 26,
             UltimateRaids = 28,
+            VariantAndCriterionDungeons = 30
         }
     }
 }

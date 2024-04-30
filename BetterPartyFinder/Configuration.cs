@@ -12,7 +12,7 @@ namespace BetterPartyFinder
 
         public int Version { get; set; } = 1;
 
-        public Dictionary<Guid, ConfigurationFilter> Presets { get; } = new();
+        public Dictionary<Guid, ConfigurationFilter> Presets { get; } = [];
         public Guid? SelectedPreset { get; set; }
 
         public bool ShowWhenPfOpen { get; set; }
@@ -39,14 +39,14 @@ namespace BetterPartyFinder
         public string Name { get; set; } = "<未命名预设>";
 
         public ListMode DutiesMode { get; set; } = ListMode.Blacklist;
-        public HashSet<uint> Duties { get; set; } = new();
+        public HashSet<uint> Duties { get; set; } = [];
 
-        public HashSet<UiCategory> Categories { get; set; } = new();
+        public HashSet<UiCategory> Categories { get; set; } = [];
 
-        public List<JobFlags> Jobs { get; set; } = new();
+        public List<JobFlags> Jobs { get; set; } = [];
         // default to true because that's the PF's default
         // use nosol if trying to avoid spam
-        public List<JobFlags> JobsLimit { get; set; } = new();
+        public List<JobFlags> JobsLimit { get; set; } = [];
         public SearchAreaFlags SearchArea { get; set; } = (SearchAreaFlags)~(uint)0;
         public LootRuleFlags LootRule { get; set; } = ~LootRuleFlags.None;
         public DutyFinderSettingsFlags DutyFinderSettings { get; set; } = ~DutyFinderSettingsFlags.None;
@@ -57,10 +57,10 @@ namespace BetterPartyFinder
         public uint? MinItemLevel { get; set; }
         public uint? MaxItemLevel { get; set; }
 
-        public HashSet<PlayerInfo> Players { get; set; } = new();
-        public HashSet<string> Description { get; set; } = new();
-        public HashSet<string> DescriptionLike { get; set; } = new();
-        public HashSet<string> DescriptionExclude { get; set; } = new();
+        public HashSet<PlayerInfo> Players { get; set; } = [];
+        public HashSet<string> Description { get; set; } = [];
+        public HashSet<string> DescriptionLike { get; set; } = [];
+        public HashSet<string> DescriptionExclude { get; set; } = [];
 
         internal bool this[SearchAreaFlags flags]
         {
@@ -179,16 +179,10 @@ namespace BetterPartyFinder
         }
     }
 
-    public class PlayerInfo
+    public class PlayerInfo(string name, uint world)
     {
-        public string Name { get; }
-        public uint World { get; }
-
-        public PlayerInfo(string name, uint world)
-        {
-            Name = name;
-            World = world;
-        }
+        public string Name { get; } = name;
+        public uint World { get; } = world;
 
         internal PlayerInfo Clone()
         {

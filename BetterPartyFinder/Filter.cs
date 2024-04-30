@@ -45,6 +45,7 @@ namespace BetterPartyFinder
             {
                 return true;
             }
+
             // check max item level
             if (!filter.AllowHugeItemLevel && Util.MaxItemLevel > 0 && listing.MinimumItemLevel > Util.MaxItemLevel)
             {
@@ -108,13 +109,13 @@ namespace BetterPartyFinder
                 return false;
             }
 
-            if (filter.JobsLimit.Count > 0)
+            if (filter.JobsLimit.Count > 0 && filter.JobsLimit[0] != 0)
             {
                 if (listing.SlotsAvailable < 8)
                 {
                     return false;
                 }
-                List<string> ExistJob = new();
+                List<string> ExistJob = [];
                 foreach (var classjob in listing.JobsPresent)
                 {
                     if (classjob.Value != null)
@@ -140,6 +141,7 @@ namespace BetterPartyFinder
 
             }
             //PluginLog.Debug(listing.Description.ToString());
+
             if (filter.Description.Count > 0)
             {
                 var ifexist = true;
@@ -157,6 +159,7 @@ namespace BetterPartyFinder
                     return false;
                 }
             }
+
             if (filter.DescriptionExclude.Count > 0)
             {
                 //var ifexist = true;
@@ -171,6 +174,7 @@ namespace BetterPartyFinder
 
             }
             // filter based on jobs (slow?)
+
             if (filter.Jobs.Count > 0 && !listing[SearchAreaFlags.AllianceRaid])
             {
                 var slots = listing.Slots.ToArray();
@@ -180,7 +184,7 @@ namespace BetterPartyFinder
                 var jobs = new HashSet<int>[filter.Jobs.Count];
                 for (var i = 0; i < jobs.Length; i++)
                 {
-                    jobs[i] = new HashSet<int>();
+                    jobs[i] = [];
                 }
 
                 for (var idx = 0; idx < filter.Jobs.Count; idx++)
