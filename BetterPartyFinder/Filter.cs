@@ -49,7 +49,8 @@ namespace BetterPartyFinder
         private bool ListingVisible(PartyFinderListing listing)
         {
             var description = listing.Description.ToString().ToLower();
-            if (_descriptionSet.Contains(description)) {
+            if (_descriptionSet.Contains(description))
+            {
                 return false;
             }
             _descriptionSet.Add(description);
