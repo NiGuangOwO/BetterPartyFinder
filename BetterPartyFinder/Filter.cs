@@ -12,6 +12,10 @@ namespace BetterPartyFinder
     {
         private Plugin Plugin { get; }
 
+        private int _batchIndex;
+
+        private readonly HashSet<string> _descriptionSet = [];
+
         internal Filter(Plugin plugin)
         {
             Plugin = plugin;
@@ -26,6 +30,11 @@ namespace BetterPartyFinder
 
         private void ReceiveListing(PartyFinderListing listing, PartyFinderListingEventArgs args)
         {
+            if (_batchIndex != args.BatchNumber)
+            {
+                _batchIndex = args.BatchNumber;
+                _descriptionSet.Clear();
+            }
             args.Visible = args.Visible && ListingVisible(listing);
         }
         internal class UploadableSlot
@@ -39,6 +48,12 @@ namespace BetterPartyFinder
         }
         private bool ListingVisible(PartyFinderListing listing)
         {
+            var description = listing.Description.ToString().ToLower();
+            if (_descriptionSet.Contains(description)) {
+                return false;
+            }
+            _descriptionSet.Add(description);
+
             // get the current preset or mark all pfs as visible
             var selectedId = Plugin.Config.SelectedPreset;
             if (selectedId == null || !Plugin.Config.Presets.TryGetValue(selectedId.Value, out var filter))
@@ -289,7 +304,7 @@ namespace BetterPartyFinder
             {
                 foreach (var des in filter.DescriptionLike)
                 {
-                    if (listing.Description.ToString().ToLower().Contains(des))
+                    if (description.Contains(des))
                     {
                         var message = new SeStringBuilder()
                             .AddText($"/e 有特别关心的招募出现了<se.5>\n招募信息：{listing.Description}")
